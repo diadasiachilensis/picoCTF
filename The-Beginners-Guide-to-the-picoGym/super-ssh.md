@@ -14,6 +14,62 @@ Se proporciona un usuario y una contraseña, además de un puerto no estándar. 
 
 ---
 
+## Teoría
+
+Una **llave SSH (Secure Shell Key)** es un par de claves criptográficas —una **clave pública** y una **clave privada**— que permite autenticarse de forma segura en servidores remotos sin necesidad de introducir una contraseña cada vez. Se utiliza principalmente para acceder a servidores Linux o sistemas remotos mediante el protocolo **SSH (Secure Shell)**, que cifra toda la comunicación.
+
+---
+
+### ¿Cómo funciona?
+
+1. **Generación del par de claves:**  
+     
+   * Se crean dos archivos:  
+       
+     * **Clave privada (`id_rsa` o `id_ed25519`)** → Se guarda **solo en tu computador**.  
+     * **Clave pública (`id_rsa.pub` o `id_ed25519.pub`)** → Se copia al servidor remoto.
+
+     
+
+   * Ejemplo:  
+       
+     ssh-keygen \-t ed25519 \-C "tu\_email@example.com"
+
+     
+2. **Autenticación:**  
+     
+   * Cuando te conectas al servidor, este **verifica que la clave pública coincida** con tu clave privada local.  
+   * Si coinciden, el servidor te da acceso **sin pedir contraseña**, pero de forma cifrada y segura.
+
+   
+
+3. **Ventaja principal:**  
+     
+   * Seguridad más alta que una contraseña tradicional.  
+   * Protección contra ataques de fuerza bruta.  
+   * Conveniencia en automatización (por ejemplo, despliegues con Git o scripts).
+
+---
+
+###  Estructura del sistema de llaves SSH
+
+* `~/.ssh/id_ed25519` → clave privada (no debe compartirse).  
+* `~/.ssh/id_ed25519.pub` → clave pública (puede compartirse).  
+* `~/.ssh/authorized_keys` (en el servidor) → contiene las claves públicas permitidas.  
+* `~/.ssh/config` → archivo opcional para simplificar conexiones SSH.
+
+---
+
+###  Ejemplo práctico
+
+Si creas una llave SSH en tu máquina local y la agregas a un servidor remoto, puedes acceder así:
+
+ssh usuario@servidor.com
+
+Sin escribir contraseña. Esto es lo que se usa, por ejemplo, en plataformas como **GitHub**, **GitLab** o en desafíos como **picoCTF – Súper SSH**, donde se aprende a conectarse a máquinas remotas mediante autenticación segura.
+---
+
+
 ## Resumen del reto
 
 1. Conectar por SSH al host y puerto indicados usando las credenciales provistas.
